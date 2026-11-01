@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Web UI Suite" parallel="methods" thread-count="3">
+    <test name="Sauce Demo storefront">
+        <packages>
+            <package name="com.nidasehba.ui.tests"/>
+        </packages>
+    </test>
+</suite>

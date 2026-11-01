@@ -1,0 +1,34 @@
+# Runs the UI suite in Microsoft's Playwright image (browsers and OS dependencies preinstalled).
+stages:
+  - test
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+
+cache:
+  key: maven
+  paths:
+    - .m2/repository
+
+.ui-tests:
+  stage: test
+  image: mcr.microsoft.com/playwright/java:v1.47.0-jammy
+  artifacts:
+    when: always
+    paths:
+      - target/surefire-reports/
+      - target/screenshots/
+      - target/traces/
+    reports:
+      junit: target/surefire-reports/TEST-*.xml
+
+chromium:
+  extends: .ui-tests
+  script:
+    - mvn -B test -Dbrowser=chromium
+
+firefox:
+  extends: .ui-tests
+  script:
+    - mvn -B test -Dbrowser=firefox -Dgroups=smoke
