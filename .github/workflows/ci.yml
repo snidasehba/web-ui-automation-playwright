@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  ui-tests:
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright/java:v1.47.0-jammy
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox]
+    env:
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - name: UI tests (${{ matrix.browser }})
+        run: mvn -B test -Dbrowser=${{ matrix.browser }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: results-${{ matrix.browser }}
+          path: |
+            target/surefire-reports/
+            target/screenshots/
+            target/traces/

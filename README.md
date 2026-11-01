@@ -1,7 +1,7 @@
 # Web UI Automation with Playwright (Java)
 
 End-to-end UI tests for an online store, written in **Java 17** with **Playwright** and **TestNG**,
-using the **Page Object Model**, running in parallel and in **GitLab CI** on Chromium and Firefox.
+using the **Page Object Model**, running in parallel and in **GitHub Actions** (a GitLab CI file is included too) on Chromium and Firefox.
 
 The application under test is [Sauce Demo](https://www.saucedemo.com), a public practice site
 provided by Sauce Labs for test automation.
@@ -25,7 +25,7 @@ src/test/java/com/nidasehba/ui/
   pages/                    page objects: Login, Inventory, Cart, Checkout
   tests/                    test classes (groups: smoke, regression)
 src/test/resources/testng.xml   parallel suite
-.gitlab-ci.yml              Chromium full run + Firefox smoke run
+.github/workflows/ci.yml    Chromium + Firefox runs (also .gitlab-ci.yml)
 ```
 
 ## Run it
